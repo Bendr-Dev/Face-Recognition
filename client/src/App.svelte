@@ -1,16 +1,18 @@
 <script lang="ts">
+import WebCam from "./WebCam.svelte";
+
 </script>
 
 <main>
 	<h1>Face Recognition</h1>
+	<WebCam />
 </main>
 
 <style>
 	main {
 		text-align: center;
 		padding: 1em;
-		max-width: 240px;
-		margin: 0 auto;
+		max-width: 516px;
 	}
 
 	h1 {
