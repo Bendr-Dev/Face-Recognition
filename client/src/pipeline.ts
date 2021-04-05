@@ -25,8 +25,10 @@ export interface PipelineData {
 }
 
 /**
- * Takes in input data, configures facial recognition, and draws updated input
+ * Takes in input data, configures facial recognition, and draws the output
+ * Does not return an actual output
  * @param data (PipelineData): Object that contains data for computing facial recognition
+ * @returns Promise<void>
  */
 export const runPipeline = async ({ video, canvas, videoWidth, videoHeight, facesDetected, labeledDescriptors }: PipelineData) => {
     try {
