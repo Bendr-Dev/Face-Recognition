@@ -1,4 +1,3 @@
-import * as face from "face-api.js";
 import type {
     FaceDetection,
     FaceLandmarks68,
@@ -9,17 +8,52 @@ import type {
     WithFaceDescriptor,
     WithFaceLandmarks,
 } from "face-api.js";
+import { detectAllFaces, TinyFaceDetectorOptions, resizeResults, matchDimensions,  FaceMatcher, draw } from 'face-api.js';
+import { updateLabeledDescriptors } from "./descriptors";
 
 export type VideoFeed = HTMLElement & TNetInput & HTMLMediaElement;
-export type Canvas = Element & IDimensions & HTMLCanvasElement;
+export type CanvasType = Element & IDimensions & HTMLCanvasElement;
 export type FaceDescriptor = WithFaceDescriptor<WithFaceLandmarks<{ detection: FaceDetection }, FaceLandmarks68>>;
 
-interface PipelineData {
-    video: VideoFeed;
-    canvas: Canvas;
+export interface PipelineData {
+    readonly video: VideoFeed;
+    readonly canvas: CanvasType;
+    readonly videoWidth: number,
+    readonly videoHeight: number,
     facesDetected: FaceDescriptor[];
     labeledDescriptors: LabeledFaceDescriptors[];
-    updateFacesDetected: (facesDetected: FaceDescriptor[]) => void;
-    updateLabelDescriptors: (labeledFaceDescriptors: LabeledFaceDescriptors[]) => void;
 }
 
+/**
+ * Takes in input data, configures facial recognition, and draws updated input
+ * @param data (PipelineData): Object that contains data for computing facial recognition
+ */
+export const runPipeline = async ({ video, canvas, videoWidth, videoHeight, facesDetected, labeledDescriptors }: PipelineData) => {
+    try {
+        const dimensions: IDimensions = { width: videoWidth, height: videoHeight };
+        facesDetected = await detectAllFaces(video, new TinyFaceDetectorOptions()).withFaceLandmarks().withFaceDescriptors();
+
+        matchDimensions(canvas, dimensions);
+        facesDetected = resizeResults(facesDetected, dimensions);
+
+        updateLabeledDescriptors(labeledDescriptors, facesDetected);
+
+        const faceMatcher = new FaceMatcher(labeledDescriptors);
+
+        const labeledMatches = facesDetected.map((labeledMatch: FaceDescriptor) => {
+        return faceMatcher.findBestMatch(labeledMatch.descriptor);
+        });
+
+        labeledMatches.forEach((labeledMatch: FaceMatch, index: number) => {
+            const detectedBox = facesDetected[index].detection.box;
+            const label = labeledMatch.label;
+            const drawNewBox = new draw.DrawBox(detectedBox, {
+                boxColor: label,
+                label: label,
+            });
+            drawNewBox.draw(canvas);
+        });
+    } catch (error) {
+        console.error('Error while running pipeline', error);
+    }
+}
