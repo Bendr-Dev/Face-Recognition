@@ -6,7 +6,7 @@ A client-side facial recognition program
 Install the dependencies...
 
 ```bash
-cd svelte-app
+cd client/
 npm install
 ```
 
