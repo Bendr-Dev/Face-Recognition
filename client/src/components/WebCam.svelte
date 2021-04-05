@@ -1,8 +1,8 @@
 <script lang="ts">
   import { onMount } from "svelte";
-  import { labeledDescriptors } from "./descriptors";
-  import type { CanvasType, PipelineData, VideoFeed } from "./pipeline";
-  import { runPipeline } from "./pipeline";
+  import { labeledDescriptors } from "../descriptors";
+  import type { CanvasType, PipelineData, VideoFeed } from "../pipeline";
+  import { runPipeline } from "../pipeline";
 
   onMount(async () => {
     try {
@@ -33,26 +33,37 @@
       // Run pipeline every 300ms to update facial recognition computation
       setInterval(async () => {
         await runPipeline(data);
-      }, 300);
+      }, 200);
     } catch (error) {
       console.error(error);
     }
   });
 </script>
 
-<main>
-  <canvas id="canvas" class="overlay" />
-  <video autoplay={true} id="videoEl">
-    <track kind="captions" />
-  </video>
-</main>
+<section>
+  <main>
+    <canvas id="canvas" class="overlay" />
+    <video autoplay={true} id="videoEl">
+      <track kind="captions" />
+    </video>
+  </main>
+</section>
 
 <style>
+  section {
+    grid-area: webcam;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
   main {
-    max-width: 600px;
+    width: 600px;
     height: 450px;
     border: 2px solid var(--primary-color);
-    padding: 0.5rem;
+    filter: drop-shadow(0 0 1rem #950740);
   }
 
   .overlay {
@@ -64,6 +75,6 @@
   video {
     width: 600px;
     height: 450px;
-    background-color: var(--text-color);
+    background-color: #000;
   }
 </style>
