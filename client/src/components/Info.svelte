@@ -10,12 +10,24 @@
       target="_blank"
       rel="noopener">(face-api.js)</a
     >
+    <br />
+    <a
+      href="https://github.com/Bendr-Dev/Face-Recognition"
+      target="_blank"
+      rel="noopener">(source code)</a
+    >
   </p>
 </section>
 
 <style>
   section {
     grid-area: info;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
   }
 
   h2 {
