@@ -9,11 +9,14 @@
   import Header from "./Header.svelte";
   import Info from "./Info.svelte";
 
+  let isLoading = true;
+
   const loadModels = async () => {
     try {
       await loadFaceLandmarkModel("../../models");
       await loadFaceRecognitionModel("../../models");
       await loadTinyFaceDetectorModel("../../models");
+      isLoading = false;
     } catch (error) {
       console.error(error);
     }
@@ -27,7 +30,11 @@
 <main>
   <section>
     <Header />
-    <WebCam />
+    {#if isLoading}
+      <div class="loading">Loading Models...</div>
+    {:else}
+      <WebCam />
+    {/if}
     <Info />
   </section>
 </main>
@@ -51,5 +58,18 @@
     height: 600px;
     text-align: center;
     background-color: var(--background-color);
+  }
+
+  .loading {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: var(--text-color);
+    font-size: 28px;
+    font-weight: 100;
+    width: 600px;
+    height: 450px;
+    border: 2px solid var(--primary-color);
+    filter: drop-shadow(0 0 1rem #950740);
   }
 </style>
