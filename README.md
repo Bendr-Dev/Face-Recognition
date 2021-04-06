@@ -1,29 +1,19 @@
 # Face-Recognition
-A client-side facial recognition program
+A client-side facial recognition program that utilizes [face-api.js](https://github.com/justadudewhohacks/face-api.js) to achieve a real-time, multi-facial recognition system.
 
 ## Get started
 
-Install the dependencies...
+Go into directory and install the dependencies
 
 ```bash
 cd client/
 npm install
 ```
 
-...then start [Rollup](https://rollupjs.org):
+Run a command
 
 ```bash
 npm run dev
 ```
 
 Navigate to [localhost:5000](http://localhost:5000).
-
-## Building and running in production mode
-
-To create an optimised version of the app:
-
-```bash
-npm run build
-```
-
-You can run the newly built app with `npm run start`.
