@@ -14,8 +14,8 @@
       const data: PipelineData = {
         video: video,
         canvas: canvas,
-        videoWidth: 650,
-        videoHeight: 450,
+        videoWidth: video.clientWidth,
+        videoHeight: video.clientHeight,
         facesDetected: null,
         labeledDescriptors: $labeledDescriptors,
       };
@@ -26,11 +26,9 @@
           video: true,
         });
         video.srcObject = stream;
-      } else {
-        // TODO: Display message saying no media devices found
       }
 
-      // Run pipeline every 300ms to update facial recognition computation
+      // Run pipeline every 200ms to update facial recognition computation
       setInterval(async () => {
         await runPipeline(data);
       }, 200);
@@ -60,21 +58,55 @@
   }
 
   main {
-    width: 600px;
-    height: 450px;
-    border: 2px solid var(--primary-color);
-    filter: drop-shadow(0 0 1rem #950740);
+    margin: 2rem;
+    width: 640px;
+    height: 480px;
+    border: 2px solid var(--accent);
   }
 
   .overlay {
     position: absolute;
-    width: 600px;
-    height: 450px;
+    width: 640px;
+    height: 480px;
   }
 
   video {
-    width: 600px;
-    height: 450px;
+    width: 640px;
+    height: 480px;
     background-color: #000;
+  }
+
+  @media (max-width: 600px) {
+    main {
+      width: 300px;
+      height: 225px;
+    }
+
+    .overlay {
+      width: 300px;
+      height: 225px;
+    }
+
+    video {
+      width: 300px;
+      height: 225px;
+    }
+  }
+
+  @media (max-width: 280px) {
+    main {
+      width: 200px;
+      height: 150px;
+    }
+
+    .overlay {
+      width: 200px;
+      height: 150px;
+    }
+
+    video {
+      width: 200px;
+      height: 150px;
+    }
   }
 </style>
