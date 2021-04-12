@@ -3,6 +3,11 @@ A client-side facial recognition program that utilizes [face-api.js](https://git
 
 ## Get started
 
+Make sure you have these installed on your computer
+```bash
+Node v12.18.2
+```
+
 Go into directory and install the dependencies
 
 ```bash
