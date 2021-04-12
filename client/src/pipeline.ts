@@ -26,7 +26,7 @@ export interface PipelineData {
 
 /**
  * Takes in input data, configures facial recognition, and draws the output
- * Does not return an actual output
+ * Does not return any output
  * @param data (PipelineData): Object that contains data for computing facial recognition
  * @returns Promise<void>
  */
@@ -34,6 +34,10 @@ export const runPipeline = async ({ video, canvas, videoWidth, videoHeight, face
     try {
         const dimensions: IDimensions = { width: videoWidth, height: videoHeight };
         facesDetected = await detectAllFaces(video, new TinyFaceDetectorOptions()).withFaceLandmarks().withFaceDescriptors();
+
+        if (facesDetected.length < 1) {
+            return;
+        }
 
         matchDimensions(canvas, dimensions);
         facesDetected = resizeResults(facesDetected, dimensions);
@@ -56,6 +60,6 @@ export const runPipeline = async ({ video, canvas, videoWidth, videoHeight, face
             drawNewBox.draw(canvas);
         });
     } catch (error) {
-        console.error('Error while running pipeline', error);
+        console.error('Error while running pipeline - ', error);
     }
 }

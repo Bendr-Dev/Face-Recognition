@@ -8,6 +8,7 @@
   import { onMount } from "svelte";
   import Header from "./Header.svelte";
   import Info from "./Info.svelte";
+  import WebCamAlert from "./WebCamAlert.svelte";
 
   let isLoading = true;
 
@@ -28,12 +29,12 @@
 </script>
 
 <main>
+  <Header />
   <section>
-    <Header />
-    {#if isLoading}
-      <div class="loading">Loading Models...</div>
-    {:else}
+    {#if !isLoading}
       <WebCam />
+    {:else}
+      <WebCamAlert message={"Loading Models..."} />
     {/if}
     <Info />
   </section>
@@ -44,32 +45,30 @@
     width: 100vw;
     height: 100vh;
     display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
   }
   section {
+    width: 100%;
+    height: 100%;
     display: grid;
     grid-template-areas:
-      "header header header header header header"
-      "webcam webcam webcam info info info"
-      "webcam webcam webcam info info info";
-
-    width: 800px;
-    height: 600px;
+      "webcam  info"
+      "webcam  info";
+    gap: 1rem;
     text-align: center;
-    background-color: var(--background-color);
+    background-color: var(--background);
   }
 
-  .loading {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    color: var(--text-color);
-    font-size: 28px;
-    font-weight: 100;
-    width: 600px;
-    height: 450px;
-    border: 2px solid var(--primary-color);
-    filter: drop-shadow(0 0 1rem #950740);
+  @media (max-width: 1023px) {
+    main {
+      width: 100%;
+      height: 100%;
+    }
+    section {
+      display: flex;
+      flex-direction: column;
+    }
   }
 </style>
