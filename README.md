@@ -1,6 +1,7 @@
 # Face-Recognition
 A client-side facial recognition program that utilizes [face-api.js](https://github.com/justadudewhohacks/face-api.js) to achieve a real-time, multi-facial recognition system.
 
+[Live Demo](https://frosty-hypatia-87c687.netlify.app/)
 ## Get started
 
 Make sure you have these installed on your computer
