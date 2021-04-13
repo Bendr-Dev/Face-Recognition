@@ -56,6 +56,6 @@
   a:focus,
   a:visited,
   a:active {
-    color: var(--accent);
+    color: var(--dark-primary);
   }
 </style>
