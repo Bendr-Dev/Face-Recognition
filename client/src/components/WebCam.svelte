@@ -41,7 +41,7 @@
 <section>
   <main>
     <canvas id="canvas" class="overlay" />
-    <video autoplay={true} id="videoEl">
+    <video playsinline autoplay={true} controls id="videoEl">
       <track kind="captions" />
     </video>
   </main>
